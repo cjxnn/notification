@@ -27,9 +27,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 showMessage(body, "onStatusReceived");
             }
             else {
-                appendToDisk(body);
+                appendToDisk(body + "\n");
                 raiseNotification(title, body);
-                showMessage(body + "\n\n", "onStreamReceived");
+                showMessage(body, "onStreamReceived");
             }
         }
     }
