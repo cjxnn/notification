@@ -42,7 +42,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 }
             }
             else {
-                appendToDisk(body + "\n");
+                appendToDisk(body);
                 raiseNotification(title, body);
                 showMessage("onReceived");
             }
