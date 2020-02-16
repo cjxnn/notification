@@ -1,5 +1,8 @@
 package com.notification;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Map;
 import android.content.Intent;
 import androidx.core.app.NotificationCompat;
@@ -20,9 +23,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String title = data.get("title");
             String body = data.get("body");
             if (title.equals("status")) {
+                appendToDisk(body);
                 showMessage(body, "onStatusReceived");
             }
             else {
+                writeToDisk(body);
                 raiseNotification(title, body);
                 showMessage(body + "\n\n", "onStreamReceived");
             }
@@ -48,5 +53,31 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         notificationManager.notify(id, builder.build());
         id++;
+    }
+
+    private void appendToDisk(String message){
+        try (FileOutputStream fos = this.openFileOutput(
+                getString(R.string.filenameStream),
+                MODE_PRIVATE | MODE_APPEND
+        )) {
+            fos.write(message.getBytes());
+        } catch (FileNotFoundException e) {
+
+        } catch (IOException e){
+
+        }
+    }
+
+    private void writeToDisk(String message){
+        try (FileOutputStream fos = this.openFileOutput(
+                getString(R.string.filenameStatus),
+                MODE_PRIVATE
+        )) {
+            fos.write(message.getBytes());
+        } catch (FileNotFoundException e) {
+
+        } catch (IOException e){
+
+        }
     }
 }

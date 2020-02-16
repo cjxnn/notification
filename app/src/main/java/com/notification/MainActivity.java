@@ -21,7 +21,6 @@ import com.google.android.gms.tasks.Task;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -29,8 +28,6 @@ import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private static final String filenameStream = "streamLog";
-    private static final String filenameStatus = "statusLog";
 
 
     private class StreamReceiver extends BroadcastReceiver {
@@ -39,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = intent.getExtras();
             String message = extras.getString("message");
             showMessage(message);
-            appendToDisk(message);
         }
     }
 
@@ -49,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = intent.getExtras();
             String message = extras.getString("message");
             updateMessage(message);
-            writeToDisk(message);
         }
     }
 
@@ -65,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadView(){
         TextView textView = findViewById(R.id.streamTxtView);
-        textView.setText(loadFromDisk(filenameStream));
+        textView.setText(loadFromDisk(getString(R.string.filenameStream)));
         textView = findViewById(R.id.statusTxtView);
-        textView.setText(loadFromDisk(filenameStatus));
+        textView.setText(loadFromDisk(getString(R.string.filenameStatus)));
     }
 
     @Override
@@ -128,26 +123,6 @@ public class MainActivity extends AppCompatActivity {
                 getSystemService(NotificationManager.class);
         notificationManager.createNotificationChannel(new NotificationChannel(channelId,
                 channelName, NotificationManager.IMPORTANCE_HIGH));
-    }
-
-    private void appendToDisk(String message){
-        try (FileOutputStream fos = this.openFileOutput(filenameStream, MODE_PRIVATE | MODE_APPEND)) {
-            fos.write(message.getBytes());
-        } catch (FileNotFoundException e) {
-
-        } catch (IOException e){
-
-        }
-    }
-
-    private void writeToDisk(String message){
-        try (FileOutputStream fos = this.openFileOutput(filenameStatus, MODE_PRIVATE)) {
-            fos.write(message.getBytes());
-        } catch (FileNotFoundException e) {
-
-        } catch (IOException e){
-
-        }
     }
 
     private String loadFromDisk(String filename){
