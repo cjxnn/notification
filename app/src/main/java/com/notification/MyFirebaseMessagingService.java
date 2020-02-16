@@ -23,11 +23,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String title = data.get("title");
             String body = data.get("body");
             if (title.equals("status")) {
-                appendToDisk(body);
+                writeToDisk(body);
                 showMessage(body, "onStatusReceived");
             }
             else {
-                writeToDisk(body);
+                appendToDisk(body);
                 raiseNotification(title, body);
                 showMessage(body + "\n\n", "onStreamReceived");
             }
