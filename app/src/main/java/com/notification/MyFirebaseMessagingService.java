@@ -26,19 +26,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String body = data.get("body");
             if (title.equals("status")) {
                 writeToDisk(body);
-                showMessage(body, "onStatusReceived");
+                showMessage("onReceived");
             }
             else {
                 appendToDisk(body + "\n");
                 raiseNotification(title, body);
-                showMessage(body, "onStreamReceived");
+                showMessage("onReceived");
             }
         }
     }
 
-    private void showMessage(String message, String action){
+    private void showMessage(String action){
         Intent intent = new Intent();
-        intent.putExtra("message", message);
         intent.setAction(action);
         sendBroadcast(intent);
     }

@@ -31,32 +31,11 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
 
-    private class StreamReceiver extends BroadcastReceiver {
+    private class Receiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Bundle extras = intent.getExtras();
-            String message = extras.getString("message");
-            showMessage(message);
+            loadView();
         }
-    }
-
-    private class StatusReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle extras = intent.getExtras();
-            String message = extras.getString("message");
-            updateMessage(message);
-        }
-    }
-
-    private void showMessage(String message){
-        TextView textView = (TextView) findViewById(R.id.streamTxtView);
-        textView.append(message);
-    }
-
-    private void updateMessage(String message){
-        TextView textView = (TextView) findViewById(R.id.statusTxtView);
-        textView.setText(message);
     }
 
     private void loadView(){
@@ -74,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
         printToken();
         createNotificationChannel();
         loadView();
-        registerStreamNotification();
-        registerStatusNotification();
+        registerNotification();
     }
 
     @Override
@@ -84,17 +62,10 @@ public class MainActivity extends AppCompatActivity {
         loadView();
     }
 
-    private void registerStreamNotification(){
+    private void registerNotification(){
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("onStreamReceived");
-        StreamReceiver receiver = new StreamReceiver();
-        registerReceiver(receiver, intentFilter);
-    }
-
-    private void registerStatusNotification(){
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("onStatusReceived");
-        StatusReceiver receiver = new StatusReceiver();
+        intentFilter.addAction("onReceived");
+        Receiver receiver = new Receiver();
         registerReceiver(receiver, intentFilter);
     }
 
