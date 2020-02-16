@@ -16,6 +16,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private int id = 0;
+    private StringBuilder longMessage;
 
 
     @Override
@@ -27,6 +28,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if (title.equals("status")) {
                 writeToDisk(body);
                 showMessage("onReceived");
+            }
+            else if (title.contains("parts")) {
+                if (longMessage == null)
+                    longMessage = new StringBuilder();
+                longMessage.append(body);
+                if (title.contains("end")){
+                    body = longMessage.toString();
+                    longMessage = null;
+                    appendToDisk(body);
+                    raiseNotification("Received Long message", "");
+                    showMessage("onReceived");
+                }
             }
             else {
                 appendToDisk(body + "\n");
