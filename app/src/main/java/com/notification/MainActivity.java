@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
 import android.content.Intent;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadView(){
         TextView textView = findViewById(R.id.streamTxtView);
         textView.setText(loadFromDisk(getString(R.string.filenameStream)));
+        textView.setMovementMethod(new ScrollingMovementMethod());
         textView = findViewById(R.id.statusTxtView);
         textView.setText(loadFromDisk(getString(R.string.filenameStatus)));
     }
