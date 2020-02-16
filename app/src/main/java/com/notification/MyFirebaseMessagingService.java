@@ -53,7 +53,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentTitle(title)
                 .setContentText(body)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(contentIntent);
+                .setContentIntent(contentIntent)
+                .setAutoCancel(true);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
 
