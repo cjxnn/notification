@@ -34,9 +34,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     longMessage = new StringBuilder();
                 longMessage.append(body);
                 if (title.equals("end")){
-                    body = longMessage.toString();
-                    longMessage = null;
                     raiseNotification(body, "");
+                    body = longMessage.toString();
+                    appendToDisk(body);
+                    longMessage = null;
                     showMessage("onReceived");
                 }
             }
