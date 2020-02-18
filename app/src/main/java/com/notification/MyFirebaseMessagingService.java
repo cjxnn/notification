@@ -29,15 +29,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 writeToDisk(body);
                 showMessage("onReceived");
             }
-            else if (title.contains("parts")) {
+            else if (title.equals("parts")) {
                 if (longMessage == null)
                     longMessage = new StringBuilder();
                 longMessage.append(body);
-                if (title.contains("end")){
+                if (title.equals("end")){
                     body = longMessage.toString();
                     longMessage = null;
-                    appendToDisk(body);
-                    raiseNotification("Received Long message", "");
+                    raiseNotification(body, "");
                     showMessage("onReceived");
                 }
             }
