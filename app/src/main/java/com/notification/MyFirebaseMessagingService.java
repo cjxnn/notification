@@ -40,6 +40,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     showMessage("onReceived");
                 }
             }
+            else if (title.equals("clear")){
+                clearLog();
+                showMessage("onReceived");
+            }
             else {
                 appendToDisk(body);
                 raiseNotification(title, body);
@@ -97,5 +101,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         } catch (IOException e){
 
         }
+    }
+
+    private void clearLog() {
+        this.deleteFile(getString(R.string.filenameStream));
     }
 }
