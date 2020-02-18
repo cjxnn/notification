@@ -107,17 +107,16 @@ public class MainActivity extends AppCompatActivity {
 
     private String loadFromDisk(String filename){
         StringBuilder stringBuilder = new StringBuilder();
-        try {
-            FileInputStream fis = this.openFileInput(filename);
+        try (FileInputStream fis = this.openFileInput(filename)) {
             InputStreamReader inputStreamReader =
                     new InputStreamReader(fis, StandardCharsets.UTF_8);
 
             BufferedReader reader = new BufferedReader(inputStreamReader);
-                String line = reader.readLine();
-                while (line != null) {
-                    stringBuilder.append(line).append('\n');
-                    line = reader.readLine();
-                }
+            String line = reader.readLine();
+            while (line != null) {
+                stringBuilder.append(line).append('\n');
+                line = reader.readLine();
+            }
         } catch (FileNotFoundException e){
 
         } catch (IOException e){
