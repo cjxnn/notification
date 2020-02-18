@@ -33,13 +33,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 if (longMessage == null)
                     longMessage = new StringBuilder();
                 longMessage.append(body);
-                if (title.equals("end")){
-                    raiseNotification(body, "");
-                    body = longMessage.toString();
-                    appendToDisk(body);
-                    longMessage = null;
-                    showMessage("onReceived");
-                }
+            }
+            else if (title.equals("end")){
+                raiseNotification(body, "");
+                body = longMessage.toString();
+                appendToDisk(body);
+                longMessage = null;
+                showMessage("onReceived");
             }
             else if (title.equals("clear")){
                 clearLog();
