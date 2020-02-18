@@ -11,6 +11,8 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.content.Intent;
 
@@ -41,9 +43,15 @@ public class MainActivity extends AppCompatActivity {
     private void loadView(){
         TextView textView = findViewById(R.id.streamTxtView);
         textView.setText(loadFromDisk(getString(R.string.filenameStream)));
-        textView.setMovementMethod(new ScrollingMovementMethod());
         textView = findViewById(R.id.statusTxtView);
         textView.setText(loadFromDisk(getString(R.string.filenameStatus)));
+        final ScrollView scrollView = findViewById(R.id.statusScrView);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(View.FOCUS_DOWN);
+            }
+        });
     }
 
     @Override
